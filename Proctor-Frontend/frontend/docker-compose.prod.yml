@@ -1,0 +1,41 @@
+services:
+  frontend-prod:
+    image: dalmiamanhv/sensai-frontend:latest
+    ports:
+      - "8501:3000"
+    depends_on:
+      backend-prod:
+        condition: service_healthy
+    # restart: unless-stopped
+    networks:
+      - sensai-network-prod
+
+  backend-prod:
+    image: dalmiamanhv/sensai-ai:latest
+    working_dir: /src
+    command: bash -c "python /src/startup.py && uvicorn api.main:app --host 0.0.0.0 --port 8001"
+    volumes:
+      - /appdata_prod:/appdata
+    ports:
+      - "8001:8001"
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:8001/health" ]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+    networks:
+      - sensai-network-prod
+
+  public-api-prod:
+    image: dalmiamanhv/sensai-ai:latest
+    working_dir: /src
+    command: bash -c "python /src/startup.py && uvicorn api.public:app --host 0.0.0.0 --port 8001"
+    volumes:
+      - /appdata_prod:/appdata
+    ports:
+      - "8004:8001"
+
+networks:
+  sensai-network-prod:
+    driver: bridge
