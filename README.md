@@ -1,5 +1,5 @@
 # IntegriProct - Assessment Proctoring System
-## IntegriProct is a smart and flexible exam proctoring system designed for digital classroom environments. It offers rule-based and AI-powered proctoring features to maintain test integrity and support both teachers and students.
+### IntegriProct is a smart and flexible exam proctoring system designed for digital classroom environments. It offers rule-based and AI-powered proctoring features to maintain test integrity and support both teachers and students.
 
 ## Technology Used
 ### Next.js 
